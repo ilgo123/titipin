@@ -1,6 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Package, MapPin, ChevronLeft, Clock, Filter, Search, X, Wallet, AlertCircle } from 'lucide-react';
+import { Package, MapPin, ChevronLeft, Clock, Filter, Search, X, Wallet, AlertCircle, User, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 
 export default function TravelerMarket() {
@@ -44,7 +44,7 @@ export default function TravelerMarket() {
             <motion.div 
               initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * 0.05 }}
               key={job.id} 
-              onClick={() => setSelectedJob(job)} // KLIK UNTUK BUKA MODAL
+              onClick={() => setSelectedJob(job)} // Klik Kartu Buka Modal
               className="bg-white p-6 rounded-3xl border border-gray-100 hover:border-[#10B981]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full cursor-pointer"
             >
               <div className="flex justify-between items-start mb-5">
@@ -56,7 +56,7 @@ export default function TravelerMarket() {
                 </span>
               </div>
 
-              <div className="flex-grow">
+              <div className="flex-grow mb-6">
                 <h3 className="font-bold text-xl text-slate-900 mb-4 line-clamp-2 group-hover:text-[#10B981] transition-colors">{job.title}</h3>
                 <div className="bg-gray-50 p-3 rounded-xl space-y-2">
                   <div className="flex items-center text-sm text-gray-600">
@@ -70,13 +70,21 @@ export default function TravelerMarket() {
                 </div>
               </div>
               
-              <div className="flex items-end justify-between pt-6 mt-2">
+              <div className="pt-6 mt-auto border-t border-gray-50 flex flex-col gap-4">
                   <div>
                     <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Uang Tip</p>
                     <p className="text-[#10B981] font-black text-2xl">Rp {job.tip.toLocaleString()}</p>
                   </div>
-                  <button className="px-4 py-2 bg-gray-100 text-slate-600 text-sm font-bold rounded-lg group-hover:bg-[#10B981] group-hover:text-white transition-colors">
-                    Lihat
+                  
+                  {/* BUTTON UTAMA: LIHAT DETAIL */}
+                  <button 
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedJob(job);
+                    }}
+                    className="w-full py-3 bg-gray-50 text-slate-600 text-sm font-bold rounded-xl hover:bg-[#10B981] hover:text-white transition-colors group-hover:bg-[#10B981] group-hover:text-white"
+                  >
+                    Lihat Detail
                   </button>
               </div>
             </motion.div>
@@ -93,65 +101,71 @@ export default function TravelerMarket() {
             >
               <motion.div 
                 initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
-                className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden"
+                className="bg-white w-full max-w-md rounded-[2rem] shadow-2xl overflow-hidden"
                 onClick={e => e.stopPropagation()}
               >
                 {/* Modal Header */}
                 <div className="p-6 border-b border-gray-100 flex justify-between items-start bg-gray-50">
                   <div>
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="px-2 py-1 bg-blue-100 text-blue-700 text-[10px] font-bold rounded uppercase">Ready</span>
+                    </div>
                     <h3 className="text-2xl font-bold text-slate-900 leading-tight mb-1">{selectedJob.title}</h3>
-                    <span className="text-sm text-gray-500 flex items-center gap-1"><MapPin size={14}/> Jarak tempuh tambahan ±{selectedJob.dist}</span>
+                    <span className="text-sm text-gray-500 flex items-center gap-1"><MapPin size={14}/> Jarak tambahan ±{selectedJob.dist}</span>
                   </div>
                   <button onClick={() => setSelectedJob(null)} className="p-2 bg-white rounded-full hover:bg-gray-200 transition-colors"><X size={20}/></button>
                 </div>
 
                 {/* Modal Body */}
                 <div className="p-6 space-y-6">
-                  {/* Rute Visual */}
-                  <div className="flex items-center justify-between bg-white border-2 border-dashed border-gray-200 p-4 rounded-xl">
-                    <div className="text-center">
-                      <p className="text-xs text-gray-400 font-bold uppercase">Ambil</p>
-                      <p className="font-bold text-slate-800">{selectedJob.from}</p>
-                    </div>
-                    <div className="h-px w-10 bg-gray-300 relative">
-                      <div className="absolute -top-1 right-0 w-2 h-2 bg-gray-300 rounded-full"></div>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-xs text-gray-400 font-bold uppercase">Antar</p>
-                      <p className="font-bold text-slate-800">{selectedJob.to}</p>
-                    </div>
-                  </div>
-
                   {/* Rincian Cuan */}
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm text-gray-500">
-                      <span>Uang Tip (Dari Penitip)</span>
+                  <div className="space-y-3 bg-green-50 p-4 rounded-xl border border-green-100">
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Uang Tip</span>
                       <span>Rp {selectedJob.tip.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between text-sm text-gray-500">
-                      <span>Biaya Aplikasi (10%)</span>
-                      <span className="text-red-400">- Rp {(selectedJob.tip * 0.1).toLocaleString()}</span>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Biaya Layanan (10%)</span>
+                      <span className="text-red-500">- Rp {(selectedJob.tip * 0.1).toLocaleString()}</span>
                     </div>
-                    <div className="h-px bg-gray-100 w-full"></div>
+                    <div className="h-px bg-green-200 w-full my-1"></div>
                     <div className="flex justify-between items-center">
                       <span className="font-bold text-slate-800 flex items-center gap-2"><Wallet size={18} className="text-[#10B981]"/> Pendapatan Bersih</span>
                       <span className="text-2xl font-black text-[#10B981]">Rp {(selectedJob.tip * 0.9).toLocaleString()}</span>
                     </div>
                   </div>
 
-                  <div className="bg-blue-50 p-3 rounded-xl flex gap-3 items-start text-xs text-blue-700">
-                    <AlertCircle size={16} className="shrink-0 mt-0.5"/>
-                    <p>Pastikan barang sesuai deskripsi. Dana akan diteruskan ke saldomu setelah barang diterima.</p>
+                  {/* Info Tambahan */}
+                  <div className="flex gap-3">
+                     <div className="flex-1 bg-gray-50 p-3 rounded-xl border border-gray-100 text-center">
+                        <p className="text-xs text-gray-400 uppercase font-bold">Ambil</p>
+                        <p className="font-bold text-slate-800 text-sm truncate">{selectedJob.from}</p>
+                     </div>
+                     <div className="flex-1 bg-gray-50 p-3 rounded-xl border border-gray-100 text-center">
+                        <p className="text-xs text-gray-400 uppercase font-bold">Antar</p>
+                        <p className="font-bold text-slate-800 text-sm truncate">{selectedJob.to}</p>
+                     </div>
                   </div>
                 </div>
 
-                {/* Modal Footer */}
-                <div className="p-6 pt-0">
+                {/* Modal Footer (Action Buttons) */}
+                <div className="p-6 pt-0 flex gap-3">
+                  {/* Tombol Cek Profil */}
                   <button 
-                    onClick={() => navigate('/success?role=traveler')}
-                    className="w-full py-4 bg-slate-900 text-white font-bold text-lg rounded-2xl hover:bg-[#10B981] transition-colors shadow-lg active:scale-95 transform duration-100"
+                    onClick={() => navigate('/profile')}
+                    className="flex flex-col items-center justify-center px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-gray-500 hover:border-[#10B981] hover:text-[#10B981] transition-all"
                   >
-                    Terima Tawaran Ini
+                    <User size={20} className="mb-1"/>
+                    <span className="text-xs font-bold">Cek Profil</span>
+                  </button>
+
+                  {/* Tombol Ambil -> Chat */}
+                  <button 
+                    onClick={() => navigate('/chat')}
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-lg rounded-xl hover:bg-[#10B981] transition-colors shadow-lg active:scale-95 transform duration-100"
+                  >
+                    <MessageCircle size={20}/>
+                    Ambil Titipan Ini
                   </button>
                 </div>
               </motion.div>

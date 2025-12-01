@@ -23,7 +23,7 @@ export default function PenitipForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => { navigate('/success?role=penitip'); }, 2000); // Delay 2 detik biar kerasa searching
+    setTimeout(() => { navigate('/payment'); }, 1500); // Delay 2 detik biar kerasa searching
   };
 
   return (

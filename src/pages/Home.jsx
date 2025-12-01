@@ -89,7 +89,7 @@ export default function Home() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/start" className="w-full sm:w-auto px-10 py-5 bg-green-600 text-white text-lg font-bold rounded-full hover:bg-[#1F2937] transition-all shadow-xl shadow-green-200 hover:scale-105 flex items-center justify-center gap-2">
+            <Link to="/onboarding" className="w-full sm:w-auto px-10 py-5 bg-green-600 text-white text-lg font-bold rounded-full hover:bg-[#1F2937] transition-all shadow-xl shadow-green-200 hover:scale-105 flex items-center justify-center gap-2">
               Coba Simulasi Aplikasi <ArrowRight size={20}/>
             </Link>
           </div>
