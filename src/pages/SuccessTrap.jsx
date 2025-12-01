@@ -11,7 +11,7 @@ export default function SuccessTrap() {
   const titleRole = role === 'penitip' ? 'Diposting!' : 'Diambil!';
   
   // GANTI DENGAN LINK GOOGLE FORM ASLI KAMU
-  const gformLink = "https://forms.google.com/"; 
+  const gformLink = "https://docs.google.com/forms/d/e/1FAIpQLSf7XJ-hULJWkUUj1EOM3kkr0u6CD8rHusJEhC6RQTIGYV2M7g/viewform"; 
 
   return (
     <motion.div 
