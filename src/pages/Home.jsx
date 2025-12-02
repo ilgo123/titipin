@@ -38,7 +38,7 @@ export default function Home() {
       {/* NAVBAR SIMPEL */}
       <nav className="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
         <div className="text-2xl font-extrabold tracking-tighter text-slate-900 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center"><img src="/public/titipin-logo.svg" alt="" srcset="" /></div>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center"><img src="/titipin-logo.svg" alt="" srcset="" /></div>
             Titip.in
         </div>
         {/* <div className="hidden md:flex gap-6 text-sm font-medium text-gray-600">
